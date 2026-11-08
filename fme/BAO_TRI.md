@@ -59,9 +59,15 @@ Sau đó đẩy nhánh `sync/upstream-...` lên và mở pull request.
 | Gỡ logo ArtCraft (`docs/brand/`). Đây là nhãn hiệu, không được dùng trong bản phân phối của bên khác | |
 | Gỡ workflow cần secret của ArtCraft (sonarcloud, release, coderabbit...) | |
 
-## Việc cần FME bổ sung (TODO trong `fme/brand.toml`)
-- `bundle_id`: tên miền công ty viết ngược, ví dụ `vn.fme.fmecad`.
-- `developer`: tên pháp nhân đầy đủ.
-- `website`, `support_url`.
-- `release_repo`: repo GitHub phát hành bản cài, để tính năng tự cập nhật hoạt động.
-- **Logo thật.** Icon hiện tại là bản tạm, chữ "FME" trên nền màu.
+## Dùng nội bộ hay phát hành ra ngoài
+
+Cấu hình hiện tại trong `fme/brand.toml` **đủ để dùng nội bộ**:
+- App ID `com.fme.fmecad` chỉ cần duy nhất, không cần là tên miền thật.
+- Website, trang hỗ trợ để trống, nên dòng liên kết và mục menu tương ứng được ẩn.
+- Email người bảo trì chỉ xuất hiện trong gói `.deb` cho Linux.
+
+Chỉ cần điền các giá trị thật khi **phát hành ra ngoài công ty**: tên pháp nhân đầy đủ, website, trang hỗ trợ.
+
+**Tự cập nhật:** ứng dụng kiểm tra GitHub Releases của `release_repo`. Nếu repo để riêng tư, máy người dùng không đọc được (cần đăng nhập), nên bản cài chỉ báo "Could not check for updates". Khi đó phát hành nội bộ qua tab Actions (workflow **FME build**) hoặc ổ chia sẻ của công ty.
+
+**Giấy phép:** MIT/Apache chỉ đặt nghĩa vụ khi phân phối. Dùng nội bộ vẫn giữ nguyên `NOTICE` và `LICENSE-*`, và chúng đã có sẵn trong bản build.
