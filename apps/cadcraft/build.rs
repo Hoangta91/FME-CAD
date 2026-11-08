@@ -12,10 +12,10 @@ fn main() {
     if std::path::Path::new("../../assets/app-icon/cadcraft.ico").exists() {
         res.set_icon("../../assets/app-icon/cadcraft.ico");
     }
-    res.set("ProductName", "CADCraft")
-        .set("FileDescription", "CADCraft computer-aided design")
-        .set("CompanyName", "Learning Machines LLC")
-        .set("LegalCopyright", "Copyright (c) 2026 ArtCraft Team and the CADCraft contributors. MIT OR Apache-2.0.")
+    res.set("ProductName", "FME-CAD")
+        .set("FileDescription", "FME-CAD computer-aided design")
+        .set("CompanyName", "FME")
+        .set("LegalCopyright", "Copyright (c) 2026 FME. Based on CADCraft by the ArtCraft Team and contributors. MIT OR Apache-2.0.")
         .set("OriginalFilename", "cadcraft.exe")
         .set("InternalName", "cadcraft");
     if let Err(e) = res.compile() {

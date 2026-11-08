@@ -16,7 +16,7 @@ use std::sync::{Arc, Mutex, MutexGuard, OnceLock, PoisonError};
 use super::parse::MAX_FILE_BYTES;
 use super::{ShxError, ShxFont};
 
-/// Where an app finds font files CADCraft can't reach itself (a web page's file store, an
+/// Where an app finds font files FME-CAD can't reach itself (a web page's file store, an
 /// app's own font folder). Called with the normalised file name (`romans.shx`); returns the
 /// file's bytes. Called without the font table's lock held.
 pub trait FontProvider: Send + Sync {
@@ -191,7 +191,7 @@ pub fn generation() -> u64 {
     table().generation
 }
 
-/// The SHX font file a style or linetype names, if CADCraft can find and read it.
+/// The SHX font file a style or linetype names, if FME-CAD can find and read it.
 pub fn find(name: &str) -> Option<Arc<ShxFont>> {
     let mut k = key(name)?;
     let (provider, dirs, generation) = {

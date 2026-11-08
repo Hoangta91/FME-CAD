@@ -1,8 +1,8 @@
-//! CADCraft file formats: DXF/DWG read, SVG and SVGZ import, SVG/PNG/PDF export (plotting).
+//! FME-CAD file formats: DXF/DWG read, SVG and SVGZ import, SVG/PNG/PDF export (plotting).
 #![deny(clippy::unwrap_used, clippy::expect_used, clippy::panic, clippy::unimplemented, clippy::todo, clippy::unreachable)]
 #![forbid(unsafe_code)]
 
-/// What a DXF file holds that CADCraft doesn't model, kept and written back (#528).
+/// What a DXF file holds that FME-CAD doesn't model, kept and written back (#528).
 mod dxf_raw;
 
 /// XCLIP boundaries as SPATIAL_FILTER objects.
@@ -46,7 +46,7 @@ pub struct SaveOptions {
 }
 
 /// The version a drawing is saved in when none is asked for: the version of the file it was
-/// read from (`$ACADVER`, the nearest one CADCraft writes), and 2018 for a new drawing.
+/// read from (`$ACADVER`, the nearest one FME-CAD writes), and 2018 for a new drawing.
 pub fn save_version(d: &Drawing) -> Version {
     d.header.get("ACADVER").and_then(cadcraft_doc::HVal::as_str).and_then(Version::for_acadver).unwrap_or_default()
 }
@@ -141,7 +141,7 @@ pub fn write_noted(d: &Drawing, name: impl AsRef<Path>, opts: &SaveOptions) -> R
 }
 
 /// The DWG bridge reads our R2000 DXF and writes the DWG at `version`, in the DWG worker when
-/// there is one. The objects CADCraft keeps without modelling them are still in the groups of the
+/// there is one. The objects FME-CAD keeps without modelling them are still in the groups of the
 /// file they came from (`Foreign::version`, not `$ACADVER`, which SAVEAS changes), and the bridge
 /// reads them as that version.
 fn write_dwg(d: &Drawing, version: Version) -> Result<(Vec<u8>, cadcraft_dwg::Unwritten)> {

@@ -520,11 +520,11 @@ fn shx_dirs(_dirs: &[PathBuf]) -> Vec<PathBuf> {
     Vec::new()
 }
 
-/// A font file CADCraft can use, for font lists.
+/// A font file FME-CAD can use, for font lists.
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct FontFile {
     /// The name a text style stores: the file name (`arial.ttf`), or the name of a font built
-    /// into CADCraft.
+    /// into FME-CAD.
     pub name: String,
     /// The family name inside the file, read for fonts in the user's folders.
     pub family: Option<String>,
@@ -532,7 +532,7 @@ pub struct FontFile {
     pub user: bool,
 }
 
-/// The fonts CADCraft can use: those in the user's folders first (with their family names),
+/// The fonts FME-CAD can use: those in the user's folders first (with their family names),
 /// then the installed and built-in ones, by name.
 pub fn installed() -> Vec<FontFile> {
     /// Fonts whose family name is read for the list.
@@ -564,11 +564,11 @@ pub fn installed() -> Vec<FontFile> {
         .collect()
 }
 
-/// Whether a text style font is drawn as named: a font CADCraft found, or its own stroke font.
+/// Whether a text style font is drawn as named: a font FME-CAD found, or its own stroke font.
 /// Other names (an SHX file, a missing TTF) are drawn with a substitute ([`crate::TextFont::resolve`]).
 pub fn available(name: &str) -> bool {
     let k = key(name);
-    // The built-in stroke font is CADCraft's own stand-in for the basic stroke fonts.
+    // The built-in stroke font is FME-CAD's own stand-in for the basic stroke fonts.
     let stand_in = matches!(k.trim_end_matches(".shx"), "txt" | "simplex" | "romans");
     k.is_empty() || stand_in || k == crate::BUILTIN_FONT.to_ascii_lowercase() || crate::shx::find(name).is_some() || find(name).is_some()
 }

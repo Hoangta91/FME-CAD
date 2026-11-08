@@ -36,7 +36,7 @@ fn model_and_paper_views_round_trip() {
     }
 }
 
-/// Another program's paper space view (flag 70 = 1, no CADCraft xdata) and a hostile twist.
+/// Another program's paper space view (flag 70 = 1, no FME-CAD xdata) and a hostile twist.
 #[test]
 fn foreign_paper_view_and_hostile_twist() {
     let tags: &[(i32, &str)] = &[

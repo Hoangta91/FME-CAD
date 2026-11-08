@@ -2,7 +2,7 @@
 //! own control channel, the one the desktop control server drives (`docs/control-protocol.md`).
 //!
 //! The crate owns the JavaScript side (`request`, `execute`, `commands`, `docInspect`, `uiInspect`,
-//! `screenshot`, as promises with a timeout). This module is CADCraft's part: a [`Request`] that
+//! `screenshot`, as promises with a timeout). This module is FME-CAD's part: a [`Request`] that
 //! queues a [`ControlRequest`] for the app, which answers it on its next frame, and waits for the
 //! reply. A call the page gave up on drops its [`PendingReply`], which cancels a request the app has
 //! not started, so the app skips it instead of running it late.

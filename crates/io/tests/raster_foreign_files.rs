@@ -1,4 +1,4 @@
-//! Raster image files CADCraft did not write itself (#956): files made by another program, and
+//! Raster image files FME-CAD did not write itself (#956): files made by another program, and
 //! files laid out by hand from the formats' public descriptions, so reading is not only checked
 //! against the library that also does the writing.
 //!

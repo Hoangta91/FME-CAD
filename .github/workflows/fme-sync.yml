@@ -1,0 +1,44 @@
+# FME-CAD: moi tuan kiem tra CADCraft goc; co ban moi thi tao nhanh sync/..., build thu va mo pull request.
+name: FME sync CADCraft
+
+on:
+  schedule:
+    - cron: "17 2 * * 1"   # 02:17 UTC thu Hai
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Git identity
+        run: |
+          git config user.name "fme-cad-bot"
+          git config user.email "fme-cad-bot@users.noreply.github.com"
+      - name: Sync + rebrand
+        id: sync
+        run: bash fme/sync.sh --ci
+      - name: Linux build deps
+        if: steps.sync.outputs.changed == 'true'
+        run: sudo apt-get update && sudo apt-get install -y libxkbcommon-dev libwayland-dev libgtk-3-dev libxdo-dev
+      - uses: dtolnay/rust-toolchain@stable
+        if: steps.sync.outputs.changed == 'true'
+      - name: Build check
+        if: steps.sync.outputs.changed == 'true'
+        run: cargo check --workspace
+      - name: Push + pull request
+        if: steps.sync.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git push -f origin "${{ steps.sync.outputs.branch }}"
+          gh pr create --base main --head "${{ steps.sync.outputs.branch }}" \
+            --title "Dong bo CADCraft ${{ steps.sync.outputs.upstream_sha }}" \
+            --body "Tu dong: CADCraft goc (${{ steps.sync.outputs.upstream_sha }}) + nhan dien FME (fme/rebrand.py). Build check da qua. Kiem tra va merge." \
+            || echo "Pull request da ton tai."

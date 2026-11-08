@@ -146,7 +146,7 @@ fn filter_matrices_are_the_inverse_reference_transform() {
             EntityKind::Insert(Insert { block: "P".into(), insert: Vec3::new(150.0, 0.0, 0.0), clip: Some(clip), ..Insert::default() }),
         )
         .unwrap();
-    // Read back without CADCraft taking the filter: look at the DXF groups.
+    // Read back without FME-CAD taking the filter: look at the DXF groups.
     let text = String::from_utf8(save(&d, "a.dxf", Version::R2018)).unwrap();
     let lines: Vec<&str> = text.lines().map(str::trim).collect();
     let at = lines.windows(2).position(|w| w[0] == "0" && w[1] == "SPATIAL_FILTER").unwrap();

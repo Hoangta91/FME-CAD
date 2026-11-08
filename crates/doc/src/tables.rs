@@ -803,11 +803,11 @@ pub struct PageSetup {
     /// Saving writes them back while they still describe `width_mm`, `height_mm` and
     /// `landscape`, so each program's convention for media defined wider than tall survives a
     /// round trip: AutoCAD stores a portrait size and a quarter turn, ZWCAD the media's own size
-    /// and no turn (#1463). `None` for page setups made in CADCraft.
+    /// and no turn (#1463). `None` for page setups made in FME-CAD.
     #[serde(skip)]
     pub file_paper: Option<(f64, f64, i64)>,
     /// The paper image origin (DXF groups 148/149, in plot paper units) as the file had it, so a
-    /// save keeps where the sheet sits; `None` for a page CADCraft made, written as 0,0 (#2109).
+    /// save keeps where the sheet sits; `None` for a page FME-CAD made, written as 0,0 (#2109).
     #[serde(skip_serializing_if = "Option::is_none")]
     pub image_origin: Option<Vec2>,
 }
@@ -849,7 +849,7 @@ pub struct Layout {
     #[serde(default)]
     pub view: Option<(Vec2, f64)>,
     /// The layout's limits (LAYOUT groups 10/11, lower left and upper right) as the file had
-    /// them; `None` for a layout CADCraft made, written as 0,0 to 12,9 (#2109).
+    /// them; `None` for a layout FME-CAD made, written as 0,0 to 12,9 (#2109).
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub limits: Option<(Vec2, Vec2)>,
 }
