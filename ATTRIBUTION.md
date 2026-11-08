@@ -79,3 +79,22 @@ Generated-in-code assets are original and have no file to list:
 | `crates/ui-egui/src/i18n/el.tsv` | @Camthalion77 with ChatGPT (AI-assisted) | Original Greek translations of CADCraft English strings | MIT OR Apache-2.0 (`LICENSE-MIT`, `LICENSE-APACHE`) | No proprietary localization resources copied; independent native proofreading pending |
 | `crates/ui-egui/src/i18n/vi.tsv` | @2ez4gcx with Claude Code (AI-assisted) | Original Vietnamese translations of CADCraft English strings | MIT OR Apache-2.0 (`LICENSE-MIT`, `LICENSE-APACHE`) | No proprietary localization resources copied; terminology chosen with a native speaker, full proofreading pending |
 | `crates/ui-egui/src/i18n/ka.tsv` | Davit Matchakhelidze (@devius), native speaker, with Claude Code | Original Georgian translations of CADCraft English strings | MIT OR Apache-2.0 (`LICENSE-MIT`, `LICENSE-APACHE`) | No proprietary localization resources copied; written from the English strings, no other catalog used as a source; terminology and doubtful strings decided by a native Georgian speaker; no font assets added (the Georgian face comes from craft-fonts) |
+
+## FME-CAD brand assets
+
+| File | Author | Source | Licence | Notes |
+|---|---|---|---|---|
+| `fme/assets/app-icon/fme-1024.png` | FME | fme/make_icons.py | MIT OR Apache-2.0 | FME-CAD icon source |
+| `fme/assets/app-icon/fme-256.png` | FME | fme/make_icons.py | MIT OR Apache-2.0 | FME-CAD icon source |
+| `fme/assets/app-icon/fme-64.png` | FME | fme/make_icons.py | MIT OR Apache-2.0 | FME-CAD icon source |
+| `fme/assets/app-icon/fme-macos-512.png` | FME | fme/make_icons.py | MIT OR Apache-2.0 | FME-CAD icon source |
+| `fme/assets/app-icon/fme.icns` | FME | fme/make_icons.py | MIT OR Apache-2.0 | FME-CAD icon source |
+| `fme/assets/app-icon/fme.ico` | FME | fme/make_icons.py | MIT OR Apache-2.0 | FME-CAD icon source |
+| `fme/assets/app-icon/hicolor-128.png` | FME | fme/make_icons.py | MIT OR Apache-2.0 | FME-CAD icon source |
+| `fme/assets/app-icon/hicolor-16.png` | FME | fme/make_icons.py | MIT OR Apache-2.0 | FME-CAD icon source |
+| `fme/assets/app-icon/hicolor-24.png` | FME | fme/make_icons.py | MIT OR Apache-2.0 | FME-CAD icon source |
+| `fme/assets/app-icon/hicolor-256.png` | FME | fme/make_icons.py | MIT OR Apache-2.0 | FME-CAD icon source |
+| `fme/assets/app-icon/hicolor-32.png` | FME | fme/make_icons.py | MIT OR Apache-2.0 | FME-CAD icon source |
+| `fme/assets/app-icon/hicolor-48.png` | FME | fme/make_icons.py | MIT OR Apache-2.0 | FME-CAD icon source |
+| `fme/assets/app-icon/hicolor-512.png` | FME | fme/make_icons.py | MIT OR Apache-2.0 | FME-CAD icon source |
+| `fme/assets/app-icon/hicolor-64.png` | FME | fme/make_icons.py | MIT OR Apache-2.0 | FME-CAD icon source |

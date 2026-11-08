@@ -199,7 +199,14 @@ def assets():
         if line.startswith("| `assets/app-icon/") and "CADCraft contributors" in line:
             line = line.replace("CADCraft contributors", f"{DEV} (fme/assets/app-icon, fme/make_icons.py)")
         out.append(line)
-    write(p, "\n".join(out))
+    text = "\n".join(out)
+    # Nguon icon trong fme/assets cung phai co dong ATTRIBUTION (cargo xtask assets kiem tra)
+    marker = "## FME-CAD brand assets"
+    if marker not in text:
+        rows = [f"| `fme/assets/app-icon/{fn}` | {DEV} | fme/make_icons.py | MIT OR Apache-2.0 | FME-CAD icon source |"
+                for fn in sorted(os.listdir(src))]
+        text = text.rstrip("\n") + "\n\n" + marker + "\n\n| File | Author | Source | Licence | Notes |\n|---|---|---|---|---|\n" + "\n".join(rows) + "\n"
+    write(p, text)
 
 
 def copy(s, d):
