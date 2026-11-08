@@ -274,7 +274,10 @@ def docs():
     # Dich vu chi danh cho repo goc (can secret cua ArtCraft): bo khoi ban FME
     for f in [".github/workflows/sonarcloud.yml", ".github/workflows/release.yml", ".github/workflows/windows-arm64.yml",
               ".github/workflows/freebsd.yml", ".github/workflows/nix.yml", ".github/workflows/house-rules.yml",
-              ".coderabbit.yaml", "sonar-project.properties"]:
+              ".coderabbit.yaml", "sonar-project.properties",
+              # Phien ban thu vien do CADCraft quan ly (Cargo.lock di theo upstream); Dependabot cua FME se tao
+              # PR nang cap bi ghi de o lan dong bo sau -> tat.
+              ".github/dependabot.yml"]:
         fp = os.path.join(ROOT, f)
         if os.path.exists(fp):
             changed.append(f + " (xoa)")
