@@ -9,10 +9,14 @@ Nguyen tac (de cap nhat theo CADCraft ma khong xung dot):
   * Moi "patch dich" phai khop chinh xac; neu CADCraft doi ma lam patch khong khop -> script DUNG va bao loi
     (thay vi doi sai im lang). Khi do sua patch trong file nay.
 
-Chay:  python3 fme/rebrand.py            (tu thu muc goc repo)
-       python3 fme/rebrand.py --check    (chi kiem tra, khong ghi)
+Moi lan chay, script KHOI PHUC ma CADCraft goc (commit ghi trong fme/upstream.lock, do sync.sh cap nhat)
+roi moi ap nhan dien -> doi ten/mau/ID trong brand.toml bao nhieu lan cung ra ket qua dung.
+
+Chay:  python3 fme/rebrand.py            (tu thu muc goc repo; dung lai neu co file ngoai fme/ chua commit)
+       python3 fme/rebrand.py --force    (bo qua kiem tra tren - MAT thay doi chua commit ngoai fme/)
+       python3 fme/rebrand.py --check    (kiem tra cay da commit dung bang rebrand(CADCraft goc), khong ghi)
 """
-import os, re, sys, shutil, tomllib
+import os, re, sys, shutil, subprocess, tempfile, tomllib
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 FME = os.path.join(ROOT, "fme")
@@ -197,15 +201,23 @@ def assets():
     out = []
     for line in read(p).split("\n"):
         if line.startswith("| `assets/app-icon/") and "CADCraft contributors" in line:
-            line = line.replace("CADCraft contributors", f"{DEV} (fme/assets/app-icon, fme/make_icons.py)")
+            line = line.replace("CADCraft contributors", f"{DEV} (fme/assets/app-icon, fme/make_icons.py)").replace("MIT OR Apache-2.0", "LicenseRef-FME-Trademark")
         out.append(line)
     text = "\n".join(out)
-    # Nguon icon trong fme/assets cung phai co dong ATTRIBUTION (cargo xtask assets kiem tra)
+    # Logo FME va icon sinh tu logo: nhan hieu cua FME, KHONG thuoc MIT/Apache. Muc nay duoc tao lai moi lan chay.
+    lic = "LicenseRef-FME-Trademark"
     marker = "## FME-CAD brand assets"
-    if marker not in text:
-        rows = [f"| `fme/assets/app-icon/{fn}` | {DEV} | fme/make_icons.py | MIT OR Apache-2.0 | FME-CAD icon source |"
-                for fn in sorted(os.listdir(src))]
-        text = text.rstrip("\n") + "\n\n" + marker + "\n\n| File | Author | Source | Licence | Notes |\n|---|---|---|---|---|\n" + "\n".join(rows) + "\n"
+    rows = []
+    for sub in ("logo", "app-icon"):
+        d = os.path.join(FME, "assets", sub)
+        if os.path.isdir(d):
+            rows += [f"| `fme/assets/{sub}/{fn}` | {DEV} | " + ("FME logo" if sub == "logo" else "fme/make_icons.py from the FME logo")
+                     + f" | {lic} | FME trademark, not covered by MIT OR Apache-2.0 |" for fn in sorted(os.listdir(d))]
+    section = (marker + "\n\nThe FME name and logo are trademarks of " + DEV + ". They are not open source.\n\n"
+               "| File | Author | Source | Licence | Notes |\n|---|---|---|---|---|\n" + "\n".join(rows) + "\n")
+    if marker in text:
+        text = text[:text.index(marker)].rstrip("\n")
+    text = text.rstrip("\n") + "\n\n" + section
     write(p, text)
 
 
@@ -273,8 +285,57 @@ def docs():
         copy(os.path.join(src, fn), os.path.join(ROOT, ".github", "workflows", fn))
 
 
+def git(*args, **kw):
+    return subprocess.run(["git", *args], cwd=ROOT, check=True, capture_output=True, text=True, **kw).stdout
+
+
+def reset_to_upstream():
+    """Dua moi file ngoai fme/ ve dung CADCraft goc tai commit trong fme/upstream.lock."""
+    base = read(os.path.join(FME, "upstream.lock")).strip()
+    if subprocess.run(["git", "cat-file", "-e", base + "^{commit}"], cwd=ROOT).returncode != 0:
+        up = B["upstream"]
+        subprocess.run(["git", "fetch", "--no-tags", f"https://github.com/{up['repo']}", up["branch"]], cwd=ROOT, check=True)
+    dirty = [l for l in git("status", "--porcelain", "--", ".", ":(exclude)fme").splitlines() if l.strip()]
+    if dirty and "--force" not in sys.argv:
+        print("Dung: co thay doi chua commit ngoai fme/ (se bi ghi de). Commit/bo chung, hoac chay voi --force:",
+              *dirty[:10], sep="\n  ", file=sys.stderr)
+        sys.exit(3)
+    upstream_files = set(git("ls-tree", "-r", "--name-only", base).splitlines())
+    present = set(git("ls-files").splitlines()) | set(git("ls-files", "--others", "--exclude-standard").splitlines())
+    for f in sorted(present - upstream_files):
+        if not f.startswith("fme/") and os.path.exists(os.path.join(ROOT, f)):
+            os.remove(os.path.join(ROOT, f))
+    git("checkout", base, "--", ".")
+    git("reset", "-q")   # checkout tren co the stage file; tra ve trang thai chua stage
+
+
+def check():
+    """Ap rebrand vao mot ban sao (worktree tam) cua HEAD voi fme/ hien tai; so voi HEAD."""
+    tmp = tempfile.mkdtemp(prefix="fme-check-")
+    wt = os.path.join(tmp, "wt")
+    git("worktree", "add", "--detach", wt, "HEAD")
+    try:
+        shutil.rmtree(os.path.join(wt, "fme"), ignore_errors=True)
+        shutil.copytree(FME, os.path.join(wt, "fme"))
+        r = subprocess.run([sys.executable, os.path.join(wt, "fme", "rebrand.py"), "--force"], cwd=wt, capture_output=True, text=True)
+        if r.returncode != 0:
+            print(r.stdout, r.stderr, file=sys.stderr); sys.exit(r.returncode)
+        diff = [l for l in subprocess.run(["git", "status", "--porcelain", "--", ".", ":(exclude)fme"], cwd=wt,
+                                          capture_output=True, text=True).stdout.splitlines() if l.strip()]
+        if diff:
+            print(f"[check] cay da commit KHAC rebrand(CADCraft goc): {len(diff)} file", *diff[:20], sep="\n  ")
+            sys.exit(1)
+        print("[check] OK: cay da commit = rebrand(CADCraft goc).")
+    finally:
+        subprocess.run(["git", "worktree", "remove", "--force", wt], cwd=ROOT)
+        shutil.rmtree(tmp, ignore_errors=True)
+
+
 def main():
     os.chdir(ROOT)
+    if CHECK:
+        check(); return
+    reset_to_upstream()
     try:
         rename_text(); targeted(); fix_settings_tests(); assets(); overlay_and_patches(); docs()
     except PatchError as e:
@@ -285,9 +346,7 @@ def main():
             and "Based on CADCraft" not in l]
     if left:
         print("CANH BAO: con nhac den ArtCraft trong ma:", *left[:10], sep="\n  ")
-    print(("[check] se doi " if CHECK else "Da doi ") + f"{len(changed)} muc.")
-    if CHECK and changed:
-        sys.exit(1)
+    print(f"Da ap nhan dien FME ({len(changed)} muc) len CADCraft {read(os.path.join(FME, 'upstream.lock')).strip()[:12]}.")
 
 
 if __name__ == "__main__":

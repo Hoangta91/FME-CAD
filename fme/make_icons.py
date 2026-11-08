@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
-"""Sinh bo icon TAM THOI cho FME-CAD vao fme/assets/app-icon/ (chu "FME" tren nen mau nhan dien).
+"""Sinh bo icon FME-CAD vao fme/assets/app-icon/ tu logo FME (hoac icon tam neu khong co logo).
 
-Khi co logo that: thay fme/assets/app-icon/fme-1024.png bang logo 1024x1024 roi chay lai voi --from-png.
+Logo that cua FME: fme/assets/logo/ (nguon). Sinh icon:  python3 fme/make_icons.py --from-png fme/assets/logo/fme-logo.ico
+(--no-plate: bo nen trang). Nen dung logo do phan giai cao (PNG >= 1024 px hoac SVG xuat PNG) de icon lon khong bi mo.
 Can Pillow:  pip install pillow
     python3 fme/make_icons.py                 # icon tam
     python3 fme/make_icons.py --from-png logo.png
@@ -32,11 +33,30 @@ def placeholder(accent):
     return im
 
 
+def from_logo(path, plate=True):
+    """Logo bat ky (PNG/ICO, khong can vuong) -> icon 1024 vuong, giu ty le.
+    plate=True: dat len nen trang bo goc de logo chu den van doc duoc tren thanh tac vu nen toi."""
+    logo = Image.open(path)
+    if logo.format == "ICO":                        # lay anh lon nhat trong file .ico
+        logo.size = max(logo.info.get("sizes", [logo.size]))
+    logo = logo.convert("RGBA")
+    logo = logo.crop(logo.getbbox() or (0, 0, *logo.size))
+    s = 1024
+    im = Image.new("RGBA", (s, s), (0, 0, 0, 0))
+    inner = s - 2 * (95 if plate else 20)
+    k = inner / max(logo.size)
+    logo = logo.resize((round(logo.width * k), round(logo.height * k)), Image.LANCZOS)
+    if plate:
+        ImageDraw.Draw(im).rounded_rectangle((48, 48, s - 48, s - 48), radius=200, fill=(255, 255, 255, 255))
+    im.alpha_composite(logo, ((s - logo.width) // 2, (s - logo.height) // 2))
+    return im
+
+
 def main():
     brand = tomllib.load(open(os.path.join(HERE, "brand.toml"), "rb"))["brand"]
     os.makedirs(OUT, exist_ok=True)
     if "--from-png" in sys.argv:
-        src = Image.open(sys.argv[sys.argv.index("--from-png") + 1]).convert("RGBA").resize((1024, 1024), Image.LANCZOS)
+        src = from_logo(sys.argv[sys.argv.index("--from-png") + 1], plate="--no-plate" not in sys.argv)
     else:
         src = placeholder(brand["accent"])
     src.save(os.path.join(OUT, "fme-1024.png"))

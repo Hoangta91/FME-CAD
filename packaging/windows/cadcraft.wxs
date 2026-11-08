@@ -13,8 +13,8 @@
 
     <Icon Id="CadcraftIcon.ico" SourceFile="$(var.IconPath)" />
     <Property Id="ARPPRODUCTICON" Value="CadcraftIcon.ico" />
-    <Property Id="ARPURLINFOABOUT" Value="https://github.com/FME/fme-cad" />
-    <Property Id="ARPURLUPDATEINFO" Value="https://github.com/FME/fme-cad" />
+    <Property Id="ARPURLINFOABOUT" Value="https://github.com/Hoangta91/FME-CAD" />
+    <Property Id="ARPURLUPDATEINFO" Value="https://github.com/Hoangta91/FME-CAD" />
     <Property Id="ARPHELPLINK" Value="https://discord.gg/artcraft" />
 
     <StandardDirectory Id="ProgramFiles6432Folder">

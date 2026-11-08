@@ -13,10 +13,10 @@
 #[cfg(not(target_arch = "wasm32"))]
 pub const UPDATE_APP: craft_update::app::App = craft_update::app::App {
     icon_png: Some(include_bytes!("../../../assets/app-icon/hicolor/128x128/apps/com.fme.fmecad.png")),
-    accent: Some([0xc8, 0x3a, 0x1e]),
+    accent: Some([0xf8, 0x84, 0x0d]),
     // FME-CAD: ban cai va kenh cap nhat rieng (fme/brand.toml).
     developer: "FME",
-    ..craft_update::app::App::new("fme-cad", "FME-CAD", "Computer-aided design and drafting", "FME/fme-cad")
+    ..craft_update::app::App::new("fme-cad", "FME-CAD", "Computer-aided design and drafting", "Hoangta91/FME-CAD")
 };
 
 pub mod aliasdlg;

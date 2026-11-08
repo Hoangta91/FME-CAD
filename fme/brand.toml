@@ -10,9 +10,9 @@ tagline = "Computer-aided design and drafting"
 copyright = "Copyright (c) 2026 FME. Based on CADCraft by the ArtCraft Team and contributors. MIT OR Apache-2.0."
 website = ""                           # TODO: vd "https://fme.vn" (de trong = an dong lien ket)
 support_url = ""                       # TODO: trang ho tro/lien he (de trong = an muc menu ho tro)
-release_repo = "FME/fme-cad"           # TODO: owner/repo GitHub phat hanh ban cai (kenh tu cap nhat)
+release_repo = "Hoangta91/FME-CAD"     # GitHub Releases cua repo nay = kenh tu cap nhat
 maintainer = "FME <fme-cad@fme.invalid>"   # TODO: email nguoi bao tri (goi Linux)
-accent = [0xC8, 0x3A, 0x1E]            # TODO: mau nhan dien chinh
+accent = [0xF8, 0x84, 0x0D]            # cam trong logo FME
 
 [upstream]
 repo = "storytold/cadcraft"

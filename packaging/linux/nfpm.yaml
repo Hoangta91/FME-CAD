@@ -14,7 +14,7 @@ section: graphics
 priority: optional
 maintainer: ${CADCRAFT_MAINTAINER}
 vendor: FME
-homepage: https://github.com/FME/fme-cad
+homepage: https://github.com/Hoangta91/FME-CAD
 license: MIT OR Apache-2.0
 description: |-
   Open-source computer-aided design and drafting: draft, dimension and plot 2D

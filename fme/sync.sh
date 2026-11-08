@@ -34,6 +34,7 @@ TMP=$(mktemp -d); trap 'rm -rf "$TMP"' EXIT
 cp -a fme "$TMP/fme"
 git checkout -B "$BR" "upstream/$UP_BRANCH"
 rm -rf fme && cp -a "$TMP/fme" fme
+git rev-parse "upstream/$UP_BRANCH" > fme/upstream.lock
 python3 fme/rebrand.py
 git add -A
 git commit -q -m "FME-CAD: ap nhan dien len CADCraft $UP_SHA"
