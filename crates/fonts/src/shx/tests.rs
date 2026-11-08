@@ -10,7 +10,7 @@ use crate::{TextFont, TextParams};
 
 /// A small dual-orientation text font: 6 units above, 2 below.
 pub(crate) const TEXT_FONT: &str = "\
-;; CADCraft test font (written for the tests)
+;; FME-CAD test font (written for the tests)
 *0,4,cadcraft test
 6,2,2,0
 *32,3,SPACE

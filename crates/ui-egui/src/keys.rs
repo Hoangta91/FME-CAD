@@ -1,5 +1,5 @@
 //! The user's keyboard shortcuts (Tools ▸ Customize ▸ Keyboard Shortcuts...): any command can get
-//! one, and a shortcut the user gives wins over CADCraft's own; the command that had it loses it,
+//! one, and a shortcut the user gives wins over FME-CAD's own; the command that had it loses it,
 //! and the dialog says so. They are kept with the other preferences (`shortcuts`).
 //!
 //! Recording a shortcut (click, press the keys, Esc to cancel) and the conflict rules come from
@@ -120,7 +120,7 @@ pub fn by_specificity<T>(pairs: &mut [(KeyboardShortcut, T)]) {
     pairs.sort_by_key(|(s, _)| std::cmp::Reverse(weight(s)));
 }
 
-/// CADCraft's own shortcuts: the shortcut table, plus Cmd+8 (QuickCalc), which the shortcut
+/// FME-CAD's own shortcuts: the shortcut table, plus Cmd+8 (QuickCalc), which the shortcut
 /// handler reads before a focused text field can take it.
 fn defaults() -> Vec<(KeyboardShortcut, &'static str)> {
     let mut v = crate::menus::builtin_shortcuts();
@@ -138,7 +138,7 @@ fn known(id: &str) -> bool {
     cadcraft_engine::find_command(id).is_some() || crate::menus::is_ui_command(id)
 }
 
-/// The shortcuts in force: the user's first, then CADCraft's own unless the user gave that
+/// The shortcuts in force: the user's first, then FME-CAD's own unless the user gave that
 /// command another shortcut or gave the key to another command. Most specific first.
 pub fn effective(user: &UserKeys) -> Vec<(KeyboardShortcut, String)> {
     let mut out: Vec<(KeyboardShortcut, String)> = Vec::new();
@@ -400,7 +400,7 @@ pub fn dialog(app: &mut CadApp, ctx: &egui::Context, open: &mut bool) {
                             let _ = assign(&mut app.ui.shortcuts, id, "");
                         }
                         if app.ui.shortcuts.contains_key(*id)
-                            && ui.small_button(crate::tl!("Default")).on_hover_text(crate::tl!("Back to CADCraft's shortcut")).clicked()
+                            && ui.small_button(crate::tl!("Default")).on_hover_text(crate::tl!("Back to FME-CAD's shortcut")).clicked()
                         {
                             app.ui.shortcuts.remove(*id);
                         }
@@ -421,7 +421,7 @@ pub fn dialog(app: &mut CadApp, ctx: &egui::Context, open: &mut bool) {
                 reset_all = ui.button(crate::tl!("Reset to Defaults")).clicked();
             });
             ui.label(
-                RichText::new(crate::tl!("A shortcut you give wins over CADCraft's own. Changes apply at once and are kept for next time."))
+                RichText::new(crate::tl!("A shortcut you give wins over FME-CAD's own. Changes apply at once and are kept for next time."))
                     .color(t.text_dim)
                     .small(),
             );

@@ -1,0 +1,19 @@
+# Nhan dien FME-CAD. Sua file nay roi chay `python3 fme/rebrand.py` (hoac fme/sync.sh).
+# Gia tri danh dau TODO la tam thoi, can FME xac nhan.
+
+[brand]
+name = "FME-CAD"                       # ten hien thi
+id = "fme-cad"                         # ten thuong (thu muc cau hinh Linux, id cap nhat)
+bundle_id = "com.fme.fmecad"           # TODO: ten mien cong ty dao nguoc (macOS/Linux/Windows app id)
+developer = "FME"                      # TODO: ten phap nhan day du
+tagline = "Computer-aided design and drafting"
+copyright = "Copyright (c) 2026 FME. Based on CADCraft by the ArtCraft Team and contributors. MIT OR Apache-2.0."
+website = ""                           # TODO: vd "https://fme.vn" (de trong = an dong lien ket)
+support_url = ""                       # TODO: trang ho tro/lien he (de trong = an muc menu ho tro)
+release_repo = "FME/fme-cad"           # TODO: owner/repo GitHub phat hanh ban cai (kenh tu cap nhat)
+maintainer = "FME <fme-cad@fme.invalid>"   # TODO: email nguoi bao tri (goi Linux)
+accent = [0xC8, 0x3A, 0x1E]            # TODO: mau nhan dien chinh
+
+[upstream]
+repo = "storytold/cadcraft"
+branch = "main"

@@ -1,19 +1,19 @@
-//! Host modes: a page that runs CADCraft opens drawings in it and stores what it saves instead
+//! Host modes: a page that runs FME-CAD opens drawings in it and stores what it saves instead
 //! of the browser downloading. The messages and the two transports are `craft-web-host`'s
 //! (storytold/craft-libs), the same contract as the other Craft apps' bridges, with the
-//! `cadcraft:` prefix. This module is CADCraft's part of it.
+//! `cadcraft:` prefix. This module is FME-CAD's part of it.
 //!
 //! - `?host=parent` (an `<iframe>`, such as a Nextcloud app) talks to the same-origin parent over
 //!   `postMessage`; `data-host="page"` on the canvas (the page's own document, no iframe) uses
 //!   DOM `CustomEvent`s on the canvas instead. `?host=parent` wins when both are present. With no
 //!   parent, or a parent on another origin, there is no bridge: the normal app with downloads.
-//! - `cadcraft:ready` once the app is listening; send a drawing now. CADCraft reads bytes, so it
+//! - `cadcraft:ready` once the app is listening; send a drawing now. FME-CAD reads bytes, so it
 //!   says `file: false` and a host sends `bytes`.
 //! - `cadcraft:open` (from the host): `{ name, bytes }`. It opens like a file picked with
 //!   File › Open or dropped on the window; an oversized drawing is refused before it is copied.
-//! - `cadcraft:save` (to the host): `{ name, saveAs, bytes }` for every file CADCraft would
+//! - `cadcraft:save` (to the host): `{ name, saveAs, bytes }` for every file FME-CAD would
 //!   otherwise download (SAVE, SAVEAS, exports): it replaces the engine's delivery hook. The host
-//!   stores the file and reports failures itself. CADCraft doesn't tell the host which saves
+//!   stores the file and reports failures itself. FME-CAD doesn't tell the host which saves
 //!   make a file the document, so `saveAs` is always `false`.
 //! - `cadcraft:dirty` whenever unsaved changes appear or go away, `cadcraft:failed` when the app
 //!   couldn't start.
@@ -44,7 +44,7 @@ pub struct Bridge {
 }
 
 impl Bridge {
-    /// The bridge for this page, or `None` when CADCraft isn't hosted: no `?host=parent` and no
+    /// The bridge for this page, or `None` when FME-CAD isn't hosted: no `?host=parent` and no
     /// `data-host="page"` on the canvas, an unframed `?host=parent` page (it stays the normal app
     /// with downloads), or a parent on another origin.
     pub fn connect(canvas: &web_sys::HtmlCanvasElement) -> Option<Self> {
@@ -88,7 +88,7 @@ impl Bridge {
 /// The engine's delivery hook in host mode ([`cadcraft_engine::cmd::file::set_deliver`]): hand
 /// the file to the host page. `Ok` once it was sent; the engine then counts a drawing as saved.
 pub fn deliver(name: &str, _mime: &str, bytes: &[u8]) -> Result<(), String> {
-    let bridge = BRIDGE.with(|b| b.borrow().clone()).ok_or("the page that embeds CADCraft is gone")?;
+    let bridge = BRIDGE.with(|b| b.borrow().clone()).ok_or("the page that embeds FME-CAD is gone")?;
     bridge.post_save(name, bytes)
 }
 
@@ -99,7 +99,7 @@ pub fn deliver(name: &str, _mime: &str, bytes: &[u8]) -> Result<(), String> {
 fn receive_open(name: &str, data: &FileData, inbox: &crate::upload::Inbox) {
     let name = if name == "document" { DEFAULT_NAME } else { name }.to_string();
     let FileData::Bytes(array) = data else {
-        inbox.refuse(format!("Open: {name} came as a File; CADCraft reads bytes"));
+        inbox.refuse(format!("Open: {name} came as a File; FME-CAD reads bytes"));
         return;
     };
     // Refuse an oversized drawing before copying it into the app's memory (the data's own length).

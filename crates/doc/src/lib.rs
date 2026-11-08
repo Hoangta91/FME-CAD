@@ -1,4 +1,4 @@
-//! The CADCraft drawing database.
+//! The FME-CAD drawing database.
 //!
 //! A [`Drawing`] holds the header variables, symbol tables (layers, linetypes, styles), block
 //! definitions, model space and paper-space layouts. Entity collections are copy-on-write
@@ -44,7 +44,7 @@ pub use store::EntityStore;
 pub use tables::*;
 pub use xclip::{ClipBoundary, MAX_CLIP_VERTICES};
 
-/// File data CADCraft doesn't model, kept for saving (#528).
+/// File data FME-CAD doesn't model, kept for saving (#528).
 pub mod dynblock;
 pub mod foreign;
 
@@ -94,7 +94,7 @@ impl Space {
 #[derive(Clone, Debug, PartialEq)]
 pub struct Drawing {
     pub header: Header,
-    /// File data CADCraft does not model, written back on save.
+    /// File data FME-CAD does not model, written back on save.
     pub foreign: std::sync::Arc<foreign::Foreign>,
     pub layers: Vec<Layer>,
     pub linetypes: Vec<Linetype>,
@@ -140,7 +140,7 @@ pub struct Drawing {
     /// file), counted by the section they came from. Never written to a file.
     pub skipped_records: BTreeMap<String, usize>,
     /// A save option, set on the copy SAVEAS `portableFonts` writes: the file gets Windows fonts
-    /// for the Linux fonts of text styles, and each style keeps its own in CADCraft xdata, so the
+    /// for the Linux fonts of text styles, and each style keeps its own in FME-CAD xdata, so the
     /// drawing reopens with it. Never set on an open drawing.
     pub portable_fonts: bool,
     /// The pixels of the raster images that are loaded (IMAGE). Never written to a file.

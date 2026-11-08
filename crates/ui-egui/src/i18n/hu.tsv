@@ -1,6 +1,6 @@
-# CADCraft Hungarian interface catalog — original translations by the CADCraft contributors.
+# FME-CAD Hungarian interface catalog — original translations by the FME-CAD contributors.
 # License: MIT OR Apache-2.0 (the repository LICENSE-MIT and LICENSE-APACHE).
-# Written from CADCraft's English strings; no proprietary translations were copied.
+# Written from FME-CAD's English strings; no proprietary translations were copied.
 # Clean room: every entry is written from the plain meaning of the English label in ordinary
 # computing and technical drawing vocabulary. No other product's Hungarian interface, string table
 # or terminology database was consulted, and no other catalog is used as a source.
@@ -50,7 +50,7 @@
 	A drawing opened from a file keeps that file's format.	A fájlból megnyitott rajz megtartja a fájl formátumát.
 	A variable name starts with a letter and has only letters, digits and _	A változónév betűvel kezdődik, és csak betűt, számjegyet és _ jelet tartalmazhat
 	About	Névjegy
-	About CADCraft	A CADCraft névjegye
+	About FME-CAD	A FME-CAD névjegye
 	Absolute	Abszolút
 	Accessibility	Akadálymentesség
 	Add	Hozzáad
@@ -139,8 +139,8 @@
 	ByBlock	Blokk szerint
 	ByColor	Szín szerint
 	ByLayer	Réteg szerint
-	CADCraft Help	A CADCraft súgója
-	CADCraft keeps these preferences, object snap modes and drafting toggles for your user account and restores them when it starts.	A CADCraft ezeket a beállításokat, objektumillesztési módokat és rajzolási kapcsolókat a felhasználói fiókodhoz menti, és indításkor visszaállítja.
+	FME-CAD Help	A FME-CAD súgója
+	FME-CAD keeps these preferences, object snap modes and drafting toggles for your user account and restores them when it starts.	A FME-CAD ezeket a beállításokat, objektumillesztési módokat és rajzolási kapcsolókat a felhasználói fiókodhoz menti, és indításkor visszaállítja.
 	Calibrate	Kalibrálás
 	Calibrate 3D Mouse	3D egér kalibrálása
 	Cancel	Mégse
@@ -478,7 +478,7 @@
 	Hide All	Összes elrejtése
 	Hide All Constraint Bars	Összes kényszersáv elrejtése
 	Hide All Dynamic Dimensions	Összes dinamikus méret elrejtése
-	Hide CADCraft	A CADCraft elrejtése
+	Hide FME-CAD	A FME-CAD elrejtése
 	Hide Layer List	Réteglista elrejtése
 	Hide Objects	Objektumok elrejtése
 	Hide Others	Többi elrejtése
@@ -535,7 +535,6 @@
 	Jogged	Megtört sugárméret
 	Jogged Linear	Megtört lineáris méret
 	Join	Összekapcsolás
-	Join the ArtCraft Discord…	Csatlakozás az ArtCraft Discord-közösségéhez…
 	Join us on Discord	Csatlakozz hozzánk a Discordon
 	Justify	Sorkizárt
 	Keep an editable copy of this table in the drawing	A táblázat szerkeszthető másolatának megőrzése a rajzban
@@ -708,7 +707,6 @@
 	Offset	Eltolás
 	On	Be
 	On/Off	Be/ki
-	One of the Crafting Apps by the ArtCraft team and community.	Az ArtCraft csapata és közössége által készített Craft-alkalmazások egyike.
 	Only in this drawing: {n}	Csak ebben a rajzban: {n}
 	Only in {name}: {n}	Csak ebben: {name} – {n}
 	Oops	Törölt objektumok visszaállítása
@@ -821,7 +819,7 @@
 	Quick Select...	Gyorskijelölés...
 	QuickCalc	Gyorsszámológép
 	QuickCalc Pick	Érték felvétele a gyorsszámológépbe
-	Quit CADCraft	Kilépés a CADCraftból
+	Quit FME-CAD	Kilépés a FME-CADból
 	Radius	Sugár
 	Raster Image	Raszterkép
 	Ray	Félegyenes
@@ -1344,7 +1342,7 @@ menu	Draw	Rajzolás
 menu	Modify	Módosítás
 menu	View	Nézet
 	Check for Updates…	Frissítések keresése…
-	CADCraft is up to date.	A CADCraft naprakész.
+	FME-CAD is up to date.	A FME-CAD naprakész.
 	Could not check for updates.	A frissítések keresése nem sikerült.
 	Find All	Find All
 	Find what:	Find what:
