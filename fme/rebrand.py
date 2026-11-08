@@ -288,6 +288,14 @@ def docs():
         copy(os.path.join(src, fn), os.path.join(ROOT, ".github", "workflows", fn))
 
 
+def rustfmt():
+    """Ten moi khac do dai ten cu -> rustfmt co the xuong dong khac; CI (cargo fmt --check) bat buoc dung dinh dang."""
+    if shutil.which("cargo") is None:
+        print("CANH BAO: khong co cargo, bo qua cargo fmt (CI se bao loi fmt neu dinh dang lech).", file=sys.stderr)
+        return
+    subprocess.run(["cargo", "fmt", "--all"], cwd=ROOT, check=True)
+
+
 def git(*args, **kw):
     return subprocess.run(["git", *args], cwd=ROOT, check=True, capture_output=True, text=True, **kw).stdout
 
@@ -341,6 +349,7 @@ def main():
     reset_to_upstream()
     try:
         rename_text(); targeted(); fix_settings_tests(); assets(); overlay_and_patches(); docs()
+        rustfmt()
     except PatchError as e:
         print("LOI: CADCraft da thay doi, patch khong con khop. Sua patch trong fme/rebrand.py.\n", e, file=sys.stderr)
         sys.exit(2)
