@@ -1,4 +1,4 @@
-//! DVIEW: the dynamic view, on CADCraft's 2D plan views.
+//! DVIEW: the dynamic view, on FME-CAD's 2D plan views.
 //!
 //! It starts with "Select objects or <use DVIEWBLOCK>:": the objects
 //! picked are the preview set, and Enter with nothing picked previews the DVIEWBLOCK block (the
@@ -150,7 +150,7 @@ fn run_dview(s: &mut Session, p: &Value) -> Result<Value> {
 }
 
 /// The built-in DVIEWBLOCK: a house front in the unit square, origin at the lower-left corner
-/// (the size and origin a DVIEWBLOCK of one's own is expected to have). CADCraft's own drawing.
+/// (the size and origin a DVIEWBLOCK of one's own is expected to have). FME-CAD's own drawing.
 fn sample_house() -> Vec<(Vec2, Vec2)> {
     let p = Vec2::new;
     let mut lines = Vec::new();

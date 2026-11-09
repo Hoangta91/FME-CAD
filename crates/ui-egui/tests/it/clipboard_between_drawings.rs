@@ -41,7 +41,7 @@ fn copy_in_one_drawing_and_paste_in_another() {
     h.event(Event::Copy);
     h.run_steps(2);
     // The copy is mirrored to the system clipboard as text (what another drawing or another
-    // CADCraft window pastes): checked on a frame of its own, where egui's output is kept.
+    // FME-CAD window pastes): checked on a frame of its own, where egui's output is kept.
     let text = {
         let ctx = egui::Context::default();
         let mut out = ctx.run_ui(egui::RawInput::default(), |ui| cadcraft_ui_egui::clipboard::mirror(h.state(), ui.ctx()));

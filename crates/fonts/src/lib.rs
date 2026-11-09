@@ -1,4 +1,4 @@
-//! CADCraft text layout.
+//! FME-CAD text layout.
 //!
 //! Turns TEXT and MTEXT into stroke polylines with the built-in single-stroke font
 //! ("CADCraft Stroke"), the user's SHX shape fonts and big fonts ([`shx`]) or glyph outlines

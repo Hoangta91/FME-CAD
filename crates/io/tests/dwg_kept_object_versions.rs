@@ -1,4 +1,4 @@
-//! Objects CADCraft keeps without modelling them reach the DWG as the file they came from holds
+//! Objects FME-CAD keeps without modelling them reach the DWG as the file they came from holds
 //! them. The DWG bridge is an R2000 DXF, and acadrust reads some objects differently by version:
 //! read as R2000, a 2013 or later file's mental ray render settings came out a class version too
 //! high (the ODA File Converter then refuses the whole DWG: "Object improperly read:
@@ -9,7 +9,7 @@
 //! The drawing is synthetic: render settings and a field in the named object dictionary, with
 //! values chosen to be told apart. The reference is acadrust's own conversion of the same DXF to
 //! the same DWG version (an older DWG can't hold everything: a 2004 field has no value flags or
-//! format), read back; CADCraft's DWG must hold the same objects. When the DWG is the DXF's own
+//! format), read back; FME-CAD's DWG must hold the same objects. When the DWG is the DXF's own
 //! version, that reference is also checked against the DXF as read.
 #![cfg(not(any(target_arch = "wasm32", all(target_os = "freebsd", target_arch = "aarch64"))))]
 
@@ -192,7 +192,7 @@ fn kept(doc: &acadrust::CadDocument) -> Kept {
     k
 }
 
-/// acadrust's version for a CADCraft one.
+/// acadrust's version for a FME-CAD one.
 fn acad(v: Version) -> acadrust::DxfVersion {
     acadrust::DxfVersion::from_version_string(v.code())
 }

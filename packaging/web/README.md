@@ -1,4 +1,4 @@
-# Hosting CADCraft for the web
+# Hosting FME-CAD for the web
 
 `cadcraft-web-<version>.zip` (from the GitHub release, or `packaging/web/package.sh`) holds a
 static site in `cadcraft-web-<version>/`:
@@ -31,7 +31,7 @@ hash, so they can be cached forever. Only `index.html` needs revalidation.
   `.js` files, and `no-cache` on `index.html`.
 - **HTTPS:** WebGPU (and the clipboard) only work in a secure context, which means `https://`
   or `http://localhost`. Over plain HTTP elsewhere, the app falls back to WebGL2.
-- **No special isolation headers:** CADCraft doesn't use `SharedArrayBuffer`, so it doesn't
+- **No special isolation headers:** FME-CAD doesn't use `SharedArrayBuffer`, so it doesn't
   need `Cross-Origin-Opener-Policy` or `Cross-Origin-Embedder-Policy`. If your site already sends
   COEP `require-corp`, also send `Cross-Origin-Resource-Policy: same-origin` (or `cross-origin`
   when the files live on a CDN) on the app's files.
@@ -67,7 +67,7 @@ host's existing eframe persistence; clearing site data removes the saved layout.
 ```html
 <iframe
   src="https://example.com/cadcraft/"
-  title="CADCraft image editor"
+  title="FME-CAD image editor"
   style="width: 100%; height: 720px; border: 0;"
   allow="fullscreen; clipboard-read; clipboard-write"
   allowfullscreen>
@@ -151,17 +151,17 @@ try {
 }
 ```
 
-The messages and both transports are the shared contract of [`craft-web-host`](https://github.com/storytold/craft-libs/tree/main/crates/web-host) (storytold/craft-libs#420), the same for every Craft app: its README lists every message, including `saved`, with the compatibility notes. In `cadcraft:ready`, `version` is the contract's (`"1"`) and `appVersion` is this app's release. CADCraft reads bytes, so a host sends `bytes`, not a `File`.
+The messages and both transports are the shared contract of [`craft-web-host`](https://github.com/storytold/craft-libs/tree/main/crates/web-host) (storytold/craft-libs#420), the same for every Craft app: its README lists every message, including `saved`, with the compatibility notes. In `cadcraft:ready`, `version` is the contract's (`"1"`) and `appVersion` is this app's release. FME-CAD reads bytes, so a host sends `bytes`, not a `File`.
 
 ### Trust and limits
 
-- **Who is trusted.** In page host mode the page and CADCraft share one document, so any script on the page can drive the app: open files in it and receive what it saves. Use this mode only for a page you control. The iframe mode (`?host=parent`) answers only the parent window, on the page's own origin.
+- **Who is trusted.** In page host mode the page and FME-CAD share one document, so any script on the page can drive the app: open files in it and receive what it saves. Use this mode only for a page you control. The iframe mode (`?host=parent`) answers only the parent window, on the page's own origin.
 - **Files from the host are untrusted input.** An opened file goes through the same reading as one picked with File ▸ Open or dropped on the window, with the same format limits; before it is copied into the app's memory, its size is checked against the app's open size limit and a larger drawing is refused, and a name is cut to 255 characters.
 - **The event and message names are the interface.** `cadcraft:ready`, `cadcraft:open`, `cadcraft:save`, `cadcraft:dirty` and `cadcraft:failed`, and the fields they carry (the same as the `?host=parent` messages), stay stable; changing one is a breaking change.
 
 ### Driving it from the page (`window.cadcraft`)
 
-Every CADCraft web build puts `window.cadcraft` on the page, from [`craft-web-api`](https://github.com/storytold/craft-libs/tree/main/crates/web-api) (storytold/craft-libs#413), the same shape in every Craft app. `cadcraft.request(method, params)` calls any method of the control channel the desktop app serves (`docs/control-protocol.md`), and `execute(command, params)`, `commands()`, `docInspect(params)`, `uiInspect(params)` and `screenshot(params)` are shortcuts for the common ones. Each returns a Promise that resolves with the method's result and rejects with an `Error`; a call the app does not answer within 30 seconds rejects, and the app drops it unrun if it had not started it.
+Every FME-CAD web build puts `window.cadcraft` on the page, from [`craft-web-api`](https://github.com/storytold/craft-libs/tree/main/crates/web-api) (storytold/craft-libs#413), the same shape in every Craft app. `cadcraft.request(method, params)` calls any method of the control channel the desktop app serves (`docs/control-protocol.md`), and `execute(command, params)`, `commands()`, `docInspect(params)`, `uiInspect(params)` and `screenshot(params)` are shortcuts for the common ones. Each returns a Promise that resolves with the method's result and rejects with an `Error`; a call the app does not answer within 30 seconds rejects, and the app drops it unrun if it had not started it.
 
 ```js
 const drawing = await cadcraft.docInspect();             // counts, extents, layers, styles, selection
@@ -173,7 +173,7 @@ The API is there in every mode, with or without a host. Opening a drawing, handi
 
 ## Renderer selection and fallback flags
 
-CADCraft renders with wgpu. It uses **WebGPU** when the browser has it and falls back to
+FME-CAD renders with wgpu. It uses **WebGPU** when the browser has it and falls back to
 **WebGL2** on its own. URL query flags override this, and they work on the iframe `src` too:
 
 | Flag | Effect |
